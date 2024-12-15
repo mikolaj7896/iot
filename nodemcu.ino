@@ -73,8 +73,8 @@ void setup() {
   lcd.clear(); 
   espClient.setTrustAnchors(new BearSSL::X509List(ca_cert));
   client.setServer(mqtt_server, mqtt_port);
-  //client.setCallback(callback);
-  //connectToMQTT();
+  client.setCallback(callback);
+  connectToMQTT();
 }
 
 void syncTime() {
@@ -119,30 +119,30 @@ void clearBottomRow() {
   lcd.print("                ");
 }
 
-// void callback(char* topic, byte* payload, unsigned int length) {
-//   Serial.print("Message received on topic: ");
-//   Serial.print(topic);
-//   Serial.print("]: ");
-//   String message = "";
-//   for (int i = 0; i < length; i++) {
-//     message += (char)payload[i];
-//   }
-//   Serial.println(message);
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message received on topic: ");
+  Serial.print(topic);
+  Serial.print("]: ");
+  String message = "";
+  for (int i = 0; i < length; i++) {
+    message += (char)payload[i];
+  }
+  Serial.println(message);
 
-//   if (String(topic) == topic_whisper) {
-//     // Przetwarzanie wiadomości z tematu "whisper"
-//     wordBuffer.push_back(message);
-//     Serial.println("Added message to buffer for display on LCD.");
-//   } else if (String(topic) == topic_yolo) {
-//     clearBottomRow();
-//     lcd.setCursor(0, 1);
-//     lcd.print(message);
-//     Serial.println("Message displayed on LCD (bottom row).");
-//   } else {
-//     // Obsługa innych tematów
-//     Serial.println("Message received on an unknown topic.");
-//   }
-// }
+  if (String(topic) == topic_whisper) {
+    // Przetwarzanie wiadomości z tematu "whisper"
+    wordBuffer.push_back(message);
+    Serial.println("Added message to buffer for display on LCD.");
+  } else if (String(topic) == topic_yolo) {
+    clearBottomRow();
+    lcd.setCursor(0, 1);
+    lcd.print(message);
+    Serial.println("Message displayed on LCD (bottom row).");
+  } else {
+    // Obsługa innych tematów
+    Serial.println("Message received on an unknown topic.");
+  }
+}
 void clearTopRow() {
   lcd.setCursor(0, 0);
   lcd.print("                ");
