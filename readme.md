@@ -11,6 +11,7 @@ It uses Open AI Whisper model by recording 5 second chunks from default audio in
 - Python 3.11
 - libraries from requirements.txt
 - SSL cert for MQTT connection in \\python_subscriber\\cert.crt
+- Nvidia CUDA Toolkit
 
 ## CUDA Requirements
 - CUDA 12.4 (12.6 doesnt work with torch)
